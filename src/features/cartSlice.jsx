@@ -29,6 +29,11 @@ export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (id)
     return id;
 })
 
+export const clearCartitems = createAsyncThunk('cart/clearCartitems', async (items) => {
+    await items.map((item)=> api.delete(`cart/${item.id}`))
+})  
+
+
 
 export const decreaseQuantity = createAsyncThunk('cart/decreaseQuantity', async (product) => {
     console.log('product', product)
@@ -98,6 +103,9 @@ const cartSlice = createSlice({
                     state.items = state.items.filter((item) => item.id !== action.payload.id)
                 }
 
+            })
+            .addCase(clearCartitems.fulfilled,(state)=>{
+                state.items = []
             })
     }
 

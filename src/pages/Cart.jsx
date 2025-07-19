@@ -47,6 +47,10 @@ const Cart = () => {
                 </>
             )}
 
+            {items?.length > 0 &&
+            <Link to='/checkout'><button >Checkout</button></Link>
+            }
+
         </div>
 
     )
