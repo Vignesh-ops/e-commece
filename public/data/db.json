@@ -53,6 +53,25 @@
       "image": "https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg"
     }
   ],
-  "users": [],
-  "cart": []
+  "cart": [],
+  "users": [
+    {
+      "id": "1",
+      "name": "vignesh",
+      "email": "vignesh282282@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "c6c2",
+      "name": "sneha",
+      "email": "sneha@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "c580",
+      "name": "ram",
+      "email": "ram@gmail.com",
+      "password": "123"
+    }
+  ]
 }
