@@ -8,7 +8,6 @@ export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (produ
 })
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
-    console.log('product', product)
 
     const res = await api.get(`cart?id=${product.id}`)
     const existing = res.data[0]
@@ -30,26 +29,32 @@ export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (id)
 })
 
 export const clearCartitems = createAsyncThunk('cart/clearCartitems', async (items) => {
-    await items.map((item)=> api.delete(`cart/${item.id}`))
-})  
+    await items.map((item) => api.delete(`cart/${item.id}`))
+})
 
 
 
 export const decreaseQuantity = createAsyncThunk('cart/decreaseQuantity', async (product) => {
-    console.log('product', product)
 
     if (product.quantity > 1) {
         return api.put(`cart/${product.id}`, {
             ...product,
             quantity: product.quantity - 1
-        }).then((res)=>res.data)
+        }).then((res) => res.data)
     } else {
-        return api.delete(`cart/${product.id}`).then((res) => res.data)
+        try {
+            let deleteitem = await api.delete(`cart/${product.id}`)
+            if (deleteitem) {
+                return product.id
+            }
+        } catch (err) {
+            console.err(err)
+        }
     }
 })
 
 export const increaseQuantity = createAsyncThunk('cart/increaseQuantity', async (product) => {
-    return api.put(`cart/id=${product.id}`, {
+    return api.put(`cart/${product.id}`, {
         ...product,
         quantity: product.quantity + 1
     }).then((res) => res.data)
@@ -99,12 +104,18 @@ const cartSlice = createSlice({
                 if (findDecreasedItem && action.payload.quantity >= 1) {
                     findDecreasedItem.quantity = action.payload.quantity
                 } else {
-                    console.log('else',findDecreasedItem,action.payload.id)
-                    state.items = state.items.filter((item) => item.id !== action.payload.id)
+                    console.log('else', action)
+                    state.items = state.items.filter((item) => item.id !== action.payload)
                 }
 
             })
-            .addCase(clearCartitems.fulfilled,(state)=>{
+            .addCase(increaseQuantity.fulfilled, (state, action) => {
+                const findincreaseitem = state.items.find((item) => item.id === action.payload.id)
+                if (findincreaseitem) {
+                    findincreaseitem.quantity = action.payload.quantity
+                }
+            })
+            .addCase(clearCartitems.fulfilled, (state) => {
                 state.items = []
             })
     }
