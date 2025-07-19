@@ -10,7 +10,6 @@ const CartCount = () => {
 
     const {items} = useSelector((state)=>state.cart)
     const count = items.length
-    console.log(items)
     return (
         <Link to='/cart'> <span><img src={cartlgo} style={{ width: '100%', height: 'auto' }} />Cart:{count}</span>
         </Link>
