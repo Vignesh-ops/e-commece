@@ -3,9 +3,11 @@
   text-align: center;
   width: 100%;
 }
-
+a{
+  color: unset;
+}
 * {
-  box-sizing: border-box;
+  box-sizing: content-box;
 }
 /* Header styles */
 .Header-container {
@@ -40,13 +42,13 @@
   flex-wrap: wrap;
 }
 
-.Header-right span
+.Header-right a span
 {    line-height: 20px;
   padding: 10px;
   float: left;
   color: #3b3b3b;
   min-width: 30px;
-  max-width: 50px;
+  max-width: 70px;
 }
 .Header-container a :hover {
   background-color:#e6edf1;
@@ -142,3 +144,27 @@
   width: max-content;
   margin: 1rem;
 }
+
+/* Login && Register*/
+
+.login__container,.register__cont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  flex-direction: column;
+}
+
+.login__container .login__auth{
+  display: flex;
+  justify-content: space-around;
+  gap: 0.4rem;
+}
+.login__container input{
+  margin: 0.2rem;
+}
+
+.register__cont input{
+  margin: 0.2rem;
+}
+
