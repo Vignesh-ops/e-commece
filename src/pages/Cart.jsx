@@ -6,6 +6,7 @@ import { useSelector,useDispatch } from "react-redux";
 
 import { fetchCartData,increaseQuantity,decreaseQuantity,removeFromCart } from "../features/cartSlice";
 import { useEffect } from "react";
+import Button from "../app/ui/Button";
 
 const Cart = () => {
     // const { cartItems, removeFromCart, decreaseQuantity, increaseQuantity } = useCart()
@@ -34,9 +35,9 @@ const Cart = () => {
                         Quantity: {item.quantity}
                     </div>
                     <div className="prod-container__buysection">
-                        <button onClick={() => dispatch(increaseQuantity(item))}>+</button>
-                        <button onClick={() => dispatch(decreaseQuantity(item))}>-</button>
-                        <button onClick={() => dispatch(removeFromCart(item.id))}>Remove</button>
+                        <Button onClick={() => dispatch(increaseQuantity(item))} children={'+'}/>
+                        <Button onClick={() => dispatch(decreaseQuantity(item))} children='-'/>
+                        <Button onClick={() => dispatch(removeFromCart(item.id))} children='Remove'/>
                     </div>
                 </div>
 
@@ -48,7 +49,7 @@ const Cart = () => {
             )}
 
             {items?.length > 0 &&
-            <Link to='/checkout'><button >Checkout</button></Link>
+            <Link to='/checkout'><Button children='Checkout' /></Link>
             }
 
         </div>

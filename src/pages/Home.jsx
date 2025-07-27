@@ -37,7 +37,7 @@ const Home = () => {
                     </div>
                      <div className="prod-container__buysection flex gap-1">
                         <Button className="text-sm" children='Buy Now'/>
-                        <Button className="text-sm" type="submit" onClick={() => dispatch(addToCart(product))} children="Add to Cart" />
+                        <Button className="text-sm"  onClick={() => dispatch(addToCart(product))} children="Add to Cart" />
                     </div>
                 </div>
 
