@@ -15,7 +15,7 @@ const Logout = () => {
   }, [user, navigate])
 
   return (
-    <span style={{ padding: "0.8rem" }}><button onClick={() => dispatch(logout())}>Logout</button></span>
+    <span className='text-[#3b3b3b]' style={{ padding: "0.8rem" }}><button onClick={() => dispatch(logout())}>Logout</button></span>
 
   )
 }

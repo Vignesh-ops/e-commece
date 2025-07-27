@@ -25,6 +25,17 @@ export const edituser = createAsyncThunk('admin/edituser', async (user) => {
     return res.data
 })
 
+export const additem = createAsyncThunk('admin/additem', async (product) => {
+    const res = await api.post('products', {
+        ...product
+    })
+    return res.data
+})
+export const removeProduct = createAsyncThunk('admin/removeProduct', async (id) => {
+    await api.delete(`products/${id}`)
+    return id;
+})
+
 const adminSlice = createSlice({
     name: 'admin',
     initialState: {
@@ -81,6 +92,20 @@ const adminSlice = createSlice({
             .addCase(edituser.pending, (state) => {
                 state.status = 'loading'
             })
+            .addCase(additem.fulfilled, (state, action) => {
+                state.item = [...state.item, action.payload]
+                state.error = null
+            })
+            .addCase(additem.rejected, (state, action) => {
+                state.error = action.error.message
+            })
+            .addCase(removeProduct.fulfilled, (state, action) => {
+                state.items = state.items.filter((item) => item.id !== action.payload)
+                state.status='success'
+            })
+            .addCase(removeProduct.rejected, (state, action) => {
+                state.error = action.error.message
+            }) 
     }
 })
 
