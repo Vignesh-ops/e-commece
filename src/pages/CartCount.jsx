@@ -1,9 +1,7 @@
 
 
 import { Link } from "react-router-dom";
-import { useCart } from "../context/cartContext";
 import cartlgo from '../assets/shopping-cart.png'
-import { fetchCartData } from "../features/cartSlice";
 import { useSelector } from "react-redux";
 
 const CartCount = () => {
