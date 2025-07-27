@@ -32,7 +32,7 @@ const Addproducts = ({ onClose }) => {
                 <Inputfield placeholder='Title' type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <Inputfield placeholder='Price' type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
                 <Inputfield placeholder='Product Image URL' type="text" value={image} onChange={(e) => setImage(e.target.value)} />
-                <Button type='submit' onClick={() => handleAdditems()} children="Add"/>
+                <Button  onClick={() => handleAdditems()} children="Add"/>
             </form>
             {error && <p className="text-red-500 text-sm mt-2">
                 ❌ Invalid email address
