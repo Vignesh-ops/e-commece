@@ -1,5 +1,6 @@
 import { BrowserRouter, Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import './index.css'
 import './App.css'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
@@ -19,8 +20,10 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/admin/products' element={<Admin><Manageitems /></Admin>} >
-            <Route path='/admin/products' element={<Manageitems />} />
+          <Route element={<Layout/>}>
+            <Route path='/admin/products' element={<Admin><Manageitems /></Admin>} >
+              <Route path='/admin/products' element={<Manageitems />} />
+            </Route>
           </Route>
           <Route element={<ProtectedRoute><Layout /></ProtectedRoute>} >
             <Route path='/' element={<Home />} />

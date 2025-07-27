@@ -12,7 +12,7 @@ const Logout = () => {
     if (!user) {
       navigate('/login')
     }
-  }, [user, navigate])
+  }, [user, navigate,dispatch])
 
   return (
     <span className='text-[#3b3b3b]' style={{ padding: "0.8rem" }}><button onClick={() => dispatch(logout())}>Logout</button></span>

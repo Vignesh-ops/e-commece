@@ -9,7 +9,8 @@ const CartCount = () => {
     const {items} = useSelector((state)=>state.cart)
     const count = items.length
     return (
-        <Link to='/cart'> <span><img src={cartlgo} style={{ width: '100%', height: 'auto' }} />Cart:{count}</span>
+
+        <Link to='/cart'> <div className="h-10 w-10"><img src={cartlgo} style={{ width: '100%', height: 'auto' }} />Cart:{count}</div>
         </Link>
     )
 

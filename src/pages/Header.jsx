@@ -26,7 +26,7 @@ const Header = () => {
             <div className='Header-right'>
                 <CartCount></CartCount>
                 <Logout />
-                {user.role == 'admin' && <Link to='/admin/products'>Manage items</Link>}
+                {user?.role == 'admin' && <Link to='/admin/products'>Manage items</Link>}
 
             </div>
         </div>
