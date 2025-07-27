@@ -6,6 +6,14 @@
 a{
   color: unset;
 }
+.dflex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.manage-items__container{
+  flex-direction: column;
+}
 * {
   box-sizing: content-box;
 }
@@ -35,20 +43,20 @@ a{
   color: #f1f1f1;
 }
 
-.Header-right {
-  float: right;
+.Header-left {
+  float: left;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  height: 105px;
 }
 
-.Header-right a span
+.Header-left a span
 {    line-height: 20px;
-  padding: 10px;
   float: left;
   color: #3b3b3b;
   min-width: 30px;
-  max-width: 70px;
+  max-width: 60px;
 }
 .Header-container a :hover {
   background-color:#e6edf1;
@@ -56,6 +64,19 @@ a{
 }
 
 
+.Header-right {
+  float: right;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.Header-right a span
+{    line-height: 20px;
+  float: left;
+  color: #3b3b3b;
+  min-width: 30px;
+  max-width: 60px;
+}
 
 /* Home page styles */
 

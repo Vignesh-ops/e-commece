@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from '../services/api'
 
 
-export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (product) => {
+export const fetchCartData = createAsyncThunk('cart/fetchCartData', async () => {
     const res = await api.get('cart')
     return res.data
 })
