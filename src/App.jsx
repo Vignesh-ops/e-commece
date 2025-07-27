@@ -7,6 +7,8 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import Layout from './pages/Layout'
 import Register from './pages/Register'
 import Checkout from './pages/Checkout'
+import Admin from './routes/Admin'
+import Manageitems from './pages/Manageitems'
 
 function App() {
 
@@ -17,6 +19,9 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/admin/products' element={<Admin><Manageitems /></Admin>} >
+            <Route path='/admin/products' element={<Manageitems />} />
+          </Route>
           <Route element={<ProtectedRoute><Layout /></ProtectedRoute>} >
             <Route path='/' element={<Home />} />
             <Route path="/cart" element={<Cart />} />
