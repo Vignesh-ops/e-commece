@@ -91,9 +91,10 @@ const Manageitems = () => {
                     </div>
                 ))}
             </div >
-
+            <div className='w-full flex justify-center align-center flex-column gap-6'>
             {selectedcp == 'addproducts' && <Addproducts />
             }
+            </div>
             {
                 error && <p className="text-red-500 text-sm mt-2">
                     ❌ Invalid email address
