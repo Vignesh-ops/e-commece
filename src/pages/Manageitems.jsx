@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { fetchUsers, fetchProducts, edituser, removeProduct } from '../features/adminSlice'
+import { fetchUsers, fetchProducts, edituser, removeProduct,resetStatus } from '../features/adminSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import EditProduct from './EditProduct'
 import Addproducts from './Addproducts'
@@ -10,12 +10,13 @@ const Manageitems = () => {
 
     const dispatch = useDispatch()
 
+
+    const { products, users, error, status } = useSelector((state) => state.admin)
     useEffect(() => {
         dispatch(fetchProducts())
         dispatch(fetchUsers())
+        dispatch(resetStatus())
     }, [dispatch])
-
-    const { products, users, error, status } = useSelector((state) => state.admin)
 
     const [selectedproduct, setSelectedProduct] = useState(null)
 
@@ -97,7 +98,7 @@ const Manageitems = () => {
             </div>
             {
                 error && <p className="text-red-500 text-sm mt-2">
-                    ❌ Invalid email address
+                    {error}
                 </p>
             }
             {status == "success" && <p className="text-green-500 text-sm mt-2">Item has been removed</p>}

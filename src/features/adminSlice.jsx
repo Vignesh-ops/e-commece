@@ -92,14 +92,15 @@ const adminSlice = createSlice({
                 state.status = 'loading'
             })
             .addCase(additem.fulfilled, (state, action) => {
-                state.item = [...state.item, action.payload]
+                state.products = [...state.products, action.payload]
                 state.error = null
+                state.status = 'Successfully Added'
             })
             .addCase(additem.rejected, (state, action) => {
                 state.error = action.error.message
             })
             .addCase(removeProduct.fulfilled, (state, action) => {
-                state.items = state.items.filter((item) => item.id !== action.payload)
+                state.products = state.products.filter((item) => item.id !== action.payload)
                 state.status='success'
             })
             .addCase(removeProduct.rejected, (state, action) => {

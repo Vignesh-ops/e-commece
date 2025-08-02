@@ -32,6 +32,12 @@ export const register = createAsyncThunk('auth/register', async (regCredentials,
             }
         }
     } catch (err) {
+        if(err.status === 404){
+            const res = await api.post(`users`, { ...regCredentials })
+            if (res) {
+                return res.data
+            }
+        }
         return thunkAPI.rejectWithValue(err.message)
     }
 
