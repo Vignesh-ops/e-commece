@@ -12,6 +12,7 @@ const Home = () => {
 
     const [allproducts, setallProducts] = useState([])
     const [products, setProducts] = useState([])
+    const [loading,setLoading] = useState(true)
     const dispatch = useDispatch()
     // const { addToCart } = useCart()
 
@@ -20,7 +21,7 @@ const Home = () => {
         api2.get("products").then((res) => {
             setallProducts(res.data)
             setProducts(res.data)
-
+            setLoading(false)
         })
     }, [])
 
@@ -85,7 +86,7 @@ const Home = () => {
                         </div>
                     </div>
                 )))}
-                {!products && <p>Lo</p>}
+                {loading && <p>Loading . . .</p>}
             </div>
         </>
 

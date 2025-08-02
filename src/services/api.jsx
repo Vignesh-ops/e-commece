@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const LOCAL_API = "http://llocalhost:5000/";
+const LOCAL_API = "http://localhost:5000/";
 const MOCKAPI1 = "https://688dd403a459d5566b134abe.mockapi.io/mycommerce/";
 const MOCKAPI2 = "https://688dd951a459d5566b1356fc.mockapi.io/mycommerce/";
 
