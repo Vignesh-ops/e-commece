@@ -12,7 +12,7 @@ export const fetchUsers = createAsyncThunk('admin/fetchUsers', async () => {
 })
 
 export const editproducts = createAsyncThunk('admin/editproducts', async (product) => {
-    const res = await api.put(`products/${product.id}`, {
+    const res = await api2.put(`products/${product.id}`, {
         ...product
     })
     return res.data
@@ -26,13 +26,13 @@ export const edituser = createAsyncThunk('admin/edituser', async (user) => {
 })
 
 export const additem = createAsyncThunk('admin/additem', async (product) => {
-    const res = await api.post('products', {
+    const res = await api2.post('products', {
         ...product
     })
     return res.data
 })
 export const removeProduct = createAsyncThunk('admin/removeProduct', async (id) => {
-    await api.delete(`products/${id}`)
+    await api2.delete(`products/${id}`)
     return id;
 })
 

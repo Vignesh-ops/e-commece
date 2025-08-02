@@ -68,7 +68,7 @@ const Home = () => {
             </div>
             <div className="prod-container">
 
-                {products.map((product => (
+                {products?.map((product => (
                     <div key={product.id} className="prod-container__items">
                         <div className="prod-container__image">
                             <img src={product.image} />
@@ -85,6 +85,7 @@ const Home = () => {
                         </div>
                     </div>
                 )))}
+                {!products && <p>Lo</p>}
             </div>
         </>
 
