@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from '../services/api'
-
+import api2 from '../services/api'
 
 export const fetchProducts = createAsyncThunk('admin/fetchProducts', async () => {
-    const res = await api.get('products')
+    const res = await api2.get('products')
     return res.data
 })
 export const fetchUsers = createAsyncThunk('admin/fetchUsers', async () => {
