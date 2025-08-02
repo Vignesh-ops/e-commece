@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from '../services/api'
+import {api2} from '../services/api'
 
 import { useCart } from "../context/cartContext";
 import { useDispatch } from "react-redux";
@@ -17,7 +17,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(fetchCartData())
-        api.get("products").then((res) => {
+        api2.get("products").then((res) => {
             setallProducts(res.data)
             setProducts(res.data)
 
