@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import api from '../services/api'
-import api2 from '../services/api'
+import {api,api2} from '../services/api'
 
 export const fetchProducts = createAsyncThunk('admin/fetchProducts', async () => {
     const res = await api2.get('products')
