@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {api2} from '../services/api'
-
 import { useCart } from "../context/cartContext";
 import { useDispatch } from "react-redux";
 import { addToCart, fetchCartData } from "../features/cartSlice";
@@ -8,8 +7,6 @@ import Button from "../app/ui/Button";
 import Inputfield from '../app/ui/Inputfield'
 
 const Home = () => {
-
-
     const [allproducts, setallProducts] = useState([])
     const [products, setProducts] = useState([])
     const [loading,setLoading] = useState(true)
@@ -80,7 +77,7 @@ const Home = () => {
                         <div className="prod-container__itemprice">
                             Price: ${product.price}
                         </div>
-                        <div className="prod-container__buysection flex gap-1">
+                        <div className="prod-container__buysection flex justify-center gap-2">
                             <Button className="text-sm" children='Buy Now' />
                             <Button className="text-sm" onClick={() => dispatch(addToCart(product))} children="Add to Cart" />
                         </div>

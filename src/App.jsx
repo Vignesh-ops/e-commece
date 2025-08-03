@@ -3,13 +3,15 @@ import Home from './pages/Home'
 import './index.css'
 import './App.css'
 import React, { Suspense } from 'react';
-import Cart from './pages/Cart'
 import Login from './pages/Login'
 import ProtectedRoute from './routes/ProtectedRoute'
 import Layout from './pages/Layout'
 import Register from './pages/Register'
+const Cart = React.lazy(() => import('./pages/Cart'))
 const Checkout = React.lazy(() => import('./pages/Checkout'))
 const Manageitems = React.lazy(() => import('./pages/Manageitems'))
+const Userdetails = React.lazy(() => import('./pages/Userdetails'))
+
 import Admin from './routes/Admin'
 
 function App() {
@@ -31,7 +33,16 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute><Layout /></ProtectedRoute>} >
             <Route path='/' element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={
+              <Suspense fallback={<p>Loading . . </p>} >
+                <Cart />
+              </Suspense>
+            } />
+            <Route path='/userdetails' element={
+              <Suspense fallback={<p>Loading . . </p>} >
+                <Userdetails />
+              </Suspense>
+            } />
 
             <Route path="/checkout" element={
               <Suspense fallback={<p>Loading . . .</p>}>
