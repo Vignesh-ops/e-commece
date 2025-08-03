@@ -20,7 +20,7 @@ const Addproducts = ({ onClose }) => {
             "image": image
         }))
         console.log('status', status)
-        if (status == 'success') {
+        if (status == 'Successfully Added') {
             setTitle('');
             setPrice('');
             setImage('');
@@ -43,7 +43,7 @@ const Addproducts = ({ onClose }) => {
                     {error}
                 </p>
                 }
-                {status == 'Successfully Added' && <p className='color-green'>{status}</p>}
+                {status == 'Successfully Added' && <p className='text-green-500'>{status}</p>}
             </div>
         </>
     )

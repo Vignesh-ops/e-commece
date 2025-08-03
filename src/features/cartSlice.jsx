@@ -8,14 +8,20 @@ export const fetchCartData = createAsyncThunk('cart/fetchCartData', async () => 
 })
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
-
+    let existing;
     const res = await api.get(`cart?id=${product.id}`)
-    const existing = res.data[0]
+    .then((res)=>{
+        existing = res.data[0]
+    })
+    .catch((err)=>{
+       console.error(err.message)
+    })
     if (existing) {
         return await api.put(`cart/${existing.id}`, {
             ...existing,
             quantity: existing.quantity + 1
         }).then((res) => res.data)
+        
     } else {
         return await api.post('cart', {
             ...product, quantity: 1

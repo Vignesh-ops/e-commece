@@ -59,7 +59,7 @@ const Manageitems = () => {
                 <option className='text-black' value='addproducts'>Add Products</option>
                 <option className='text-black' value='editusers'>Edit Users</option>
             </select>
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))]  gap-4'>
                 {!selectedproduct && selectedcp == 'editproducts' &&
 
                     products.map((product) => (
@@ -82,7 +82,7 @@ const Manageitems = () => {
                     ))}
             </div >
             {selectedproduct && <EditProduct onClose={() => setSelectedProduct(null)} product={selectedproduct} />}
-            <div className='w-full flex justify-center align-center flex-column gap-6'>
+            <div className='w-full flex-wrap flex justify-center align-center flex-column gap-6'>
                 {selectedcp == 'editusers' && users.map((user) => (
                     <div key={user.id}>
                         <div className='text-left'>Name:{user.name}</div>
@@ -92,7 +92,7 @@ const Manageitems = () => {
                     </div>
                 ))}
             </div >
-            <div className='w-full flex justify-center align-center flex-column gap-6'>
+            <div className='w-full flex  justify-center align-center flex-column gap-6'>
             {selectedcp == 'addproducts' && <Addproducts />
             }
             </div>
