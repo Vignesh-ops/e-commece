@@ -4,11 +4,11 @@ import { login } from '../features/authSlice'
 import { useNavigate, Link } from "react-router-dom"
 import Inputfield from "../app/ui/Inputfield"
 import Button from "../app/ui/Button"
+import { useForm } from "react-hook-form"
 const Login = () => {
 
-  const { user, stauts, error } = useSelector((state) => state.auth)
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const { user, status, error } = useSelector((state) => state.auth)
+  const { register, handleSubmit, formState: { errors } } = useForm()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   useEffect(() => {
@@ -17,21 +17,43 @@ const Login = () => {
     }
   }, [user, navigate]);
 
-  const handlelogin = () => {
+  const onSubmit = (data) => {
+    console.log('data', data)
     dispatch(login({ email, password }))
   }
 
 
   return (
-    <div className="login__container">
+    <form onSubmit={handleSubmit(onSubmit)} className="login__container">
       <h2 className="m-2">Welcome to E-shop</h2>
-      <Inputfield type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
-      <Inputfield type="password" autoComplete="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <Inputfield type="email" placeholder="Enter your email"
+        {...register('email', {
+          required: 'Email is required', pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Min length must be greater than 5'
+          }
+        })}
+        autoComplete="email" />
+      {errors.email && <p>{errors.email.message}</p>}
+
+
+      <Inputfield type="password" autoComplete="password" placeholder="Enter your password"
+
+        {...register('password', {
+          required: 'password must required',
+          minLength: {
+            value: 6,
+            message: 'Password must be at least 6 characters'
+          }
+        })}
+      />
+      {errors.password && <p>{errors.password.message}</p>}
+
       <div className="flex gap-4">
-        <Button onClick={() => handlelogin()} children="Login"/>
+        <Button type="submit" children="Login" />
         <Button children={<Link to='/register'>Register</Link>} />
       </div>
-    </div>
+    </form>
   )
 }
 

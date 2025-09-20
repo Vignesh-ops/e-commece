@@ -30,7 +30,7 @@ const Header = () => {
                 <CartCount></CartCount>
                 {user && <Link to='./userdetails'>
                     <div className='flex flex-col align-center justify-center'>
-                        <div className='flex align-center overflow-[hidden] justify-center  h-[40px]'>
+                        <div className='flex align-center overflow-[hidden] justify-center   h-[40px]'>
                             <img className='h-full w-auto rounded-full' src={user.image || placeholder} alt='profile' />
                         </div>
                         <p>{user.name}</p>
