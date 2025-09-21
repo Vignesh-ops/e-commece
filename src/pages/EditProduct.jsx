@@ -1,50 +1,186 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useForm, useFieldArray } from 'react-hook-form'
 import { editproducts, resetStatus } from '../features/adminSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Inputfield from '../app/ui/Inputfield'
 import Button from '../app/ui/Button'
 
 const EditProduct = ({ product, onClose }) => {
-    const [title, setTitle] = useState(product.title)
-    const [price, setPrice] = useState(product.price)
-    const [image, setImage] = useState(product.image)
-    const [iserror, setError] = useState('')
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const { error, status } = useSelector((state) => state.admin)
 
-    const { error, status } = useSelector((state) => state.admin)
-    useEffect(() => {
-        if (error) {
-            setError(error)
-        }
-        console.log('status', status)
-
-        if (status == 'success') {
-            setTimeout(() => {
-                dispatch(resetStatus())
-                onClose()
-            }, 1000)
-        }
-
-    }, [error, status])
-    const handleitemEdit = (product) => {
-        dispatch(editproducts({ ...product, title, price, image }))
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    control,
+    reset
+  } = useForm({
+    defaultValues: {
+      title: product.title || '',
+      price: product.price || '',
+      image: product.image || '',
+      specifications: product.specifications || [{ name: '', value: '' }]
     }
+  })
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "specifications"
+  })
 
-    return (
-        <>
-            <div>EditProduct</div>
-            <form key={product.id} onSubmit={(e) => e.preventDefault()} method='' action=''>
-                <Inputfield type='text' value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Enter a product name' />
-                <Inputfield type='number' value={price} onChange={(e) => setPrice(e.target.value)} placeholder='Enter a price' />
-                <Inputfield type='text' value={image} onChange={(e) => setImage(e.target.value)} placeholder='Enter a image URL' />
-                <Button onClick={() => handleitemEdit(product)} children='submit' />
-            </form>
-            {status == 'success' && <p>Updated Successfully</p>}
-            {iserror && <p>{iserror}</p>}
+  useEffect(() => {
+    if (status === 'success') {
+      const timer = setTimeout(() => {
+        dispatch(resetStatus())
+        onClose()
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [status, dispatch, onClose])
 
-        </>
-    )
+  const onSubmit = async (data) => {
+    try {
+      const filteredSpecs = data.specifications.filter(
+        spec => spec.name.trim() !== '' && spec.value.trim() !== ''
+      )
+
+      const updatedProduct = {
+        ...product,
+        title: data.title,
+        price: data.price,
+        image: data.image,
+        specifications: filteredSpecs
+      }
+
+      await dispatch(editproducts(updatedProduct))
+    } catch (error) {
+      console.error('Error updating product:', error)
+    }
+  }
+
+  return (
+    <div>
+      <h2>Edit Product</h2>
+      
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Basic Product Fields */}
+        <div>
+          <Inputfield
+            type="text"
+            placeholder="Enter product name"
+            {...register('title', {
+              required: 'Product name is required',
+              minLength: {
+                value: 3,
+                message: 'Title must be at least 3 characters'
+              }
+            })}
+          />
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
+          )}
+        </div>
+
+        <div>
+          <Inputfield
+            type="number"
+            step="0.01"
+            placeholder="Enter price"
+            {...register('price', {
+              required: 'Price is required',
+              min: {
+                value: 0.01,
+                message: 'Price must be greater than 0'
+              }
+            })}
+          />
+          {errors.price && (
+            <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
+          )}
+        </div>
+
+        <div>
+          <Inputfield
+            type="url"
+            placeholder="Enter image URL"
+            {...register('image', {
+              required: 'Image URL is required',
+              pattern: {
+                value: /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i,
+                message: 'Please enter a valid image URL'
+              }
+            })}
+          />
+          {errors.image && (
+            <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
+          )}
+        </div>
+
+        {/* Dynamic Specifications */}
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold mb-2">Product Specifications</h3>
+          
+          {fields.map((field, index) => (
+            <div key={field.id} className="flex gap-2 mb-2">
+              <Inputfield
+                placeholder="Specification Name"
+                {...register(`specifications.${index}.name`)}
+              />
+              <Inputfield
+                placeholder="Specification Value"
+                {...register(`specifications.${index}.value`)}
+              />
+              {fields.length > 1 && (
+                <Button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="bg-red-500 text-white px-2"
+                >
+                  Remove
+                </Button>
+              )}
+            </div>
+          ))}
+          
+          <Button
+            type="button"
+            onClick={() => append({ name: '', value: '' })}
+            className="bg-blue-500 text-white mt-2"
+          >
+            Add Specification
+          </Button>
+        </div>
+
+        <div className="flex gap-4 mt-4">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-green-500 text-white"
+          >
+            {isSubmitting ? 'Updating...' : 'Update Product'}
+          </Button>
+          
+          <Button
+            type="button"
+            onClick={onClose}
+            className="bg-gray-500 text-white"
+          >
+            Cancel
+          </Button>
+        </div>
+
+        {/* Status Messages */}
+        {status === 'success' && (
+          <p className="text-green-500 mt-2">Updated Successfully!</p>
+        )}
+        
+        {error && (
+          <p className="text-red-500 mt-2">{error}</p>
+        )}
+      </form>
+    </div>
+  )
 }
 
 export default EditProduct

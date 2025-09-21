@@ -1,6 +1,9 @@
 
+import { forwardRef } from "react";
 
-const Inputfield = ({ type = 'text', value, onChange, label,placeholder,autoComplete="" }) => {
+
+const Inputfield = forwardRef( ({ type = 'text', value, onChange, label,placeholder,autoComplete="",...rest },ref) => {
+    // console.log('rest',rest,'ref',ref)
     return (
         <div className="mb-4" >
             {label && <label className="text-md font-medium text-white-700 mb-1">{label}</label>}
@@ -10,12 +13,13 @@ const Inputfield = ({ type = 'text', value, onChange, label,placeholder,autoComp
                 onChange={onChange}
                 placeholder={placeholder}
                 autoComplete={autoComplete}
+                ref={ref}
+                {...rest}
             />
         </div>
 
     )
-
-}
+})
 
 
 
